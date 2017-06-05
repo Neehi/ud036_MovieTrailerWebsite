@@ -19,7 +19,8 @@ class Movie:
 
     VALID_RATINGS = ["G", "PG", "PG-13", "R"]
 
-    def __init__(self, title, storyline, poster_image_url, trailer_youtube_url):
+    def __init__(self, title, storyline,
+                 poster_image_url, trailer_youtube_url):
         """
         Initialise an instance of a movie.
 
