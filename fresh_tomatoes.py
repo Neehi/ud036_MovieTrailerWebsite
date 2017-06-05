@@ -19,6 +19,7 @@ main_page_head = '''
     <style type="text/css" media="screen">
         body {
             padding-top: 80px;
+            background: #ececec;
         }
         #trailer .modal-dialog {
             margin-top: 200px;
@@ -39,9 +40,63 @@ main_page_head = '''
             margin-bottom: 20px;
             padding-top: 20px;
         }
-        .movie-tile:hover {
-            background-color: #EEE;
+        .movie-tile h2 {
+            font-size: 21px;
+        }
+        .movie-card {
+            position: relative;
+            margin: 0 auto;
+            width: 220px;
+            height: 342px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .movie-card:hover {
             cursor: pointer;
+        }
+        .movie-card img {
+            width: inherit;
+            height: inherit;
+        }
+        .movie-card-overlay {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+        }
+        .movie-info-overlay {
+            opacity: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            padding: 10px;
+            background: #fff;
+            text-align: left;
+            font-size: 12px;
+            z-index: 3;
+        }
+        .movie-info-overlay h2 {
+            margin: 0;
+            padding: 0 0 5px 0;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .movie-info-overlay p {
+            margin: 0;
+            padding: 0;
+        }
+        .movie-card:hover .movie-card-overlay {
+            opacity: 0.6;
+        }
+        .movie-card:hover .movie-info-overlay {
+            opacity: 1;
         }
         .scale-media {
             padding-bottom: 56.25%;
@@ -65,7 +120,7 @@ main_page_head = '''
             $("#trailer-video-container").empty();
         });
         // Start playing the video whenever the trailer modal is opened
-        $(document).on('click', '.movie-tile', function (event) {
+        $(document).on('click', '.movie-card', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
@@ -74,6 +129,7 @@ main_page_head = '''
               'src': sourceUrl,
               'frameborder': 0
             }));
+            $('[data-toggle="tooltip"]').tooltip(); 
         });
         // Animate in the movies when the page loads
         $(document).ready(function () {
@@ -94,7 +150,7 @@ main_page_content = '''
       <div class="modal-dialog">
         <div class="modal-content">
           <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
-            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24" />
           </a>
           <div class="scale-media" id="trailer-video-container">
           </div>
@@ -122,8 +178,16 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center">
+    <div class="movie-card" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+        <img src="{poster_image_url}" alt="{movie_title}" />
+        <div class="movie-card-overlay" data-toggle="tooltip" title="{movie_title}">
+        </div>
+        <div class="movie-info-overlay">
+            <h2>{movie_title}</h2>
+            <p>{movie_storyline}</p>
+        </div>
+    </div>
     <h2>{movie_title}</h2>
 </div>
 '''
@@ -144,6 +208,7 @@ def create_movie_tiles_content(movies):
         # Append the tile for the movie with its content filled in
         content += movie_tile_content.format(
             movie_title=movie.title,
+            movie_storyline=movie.storyline,
             poster_image_url=movie.poster_image_url,
             trailer_youtube_id=trailer_youtube_id
         )
