@@ -1,6 +1,10 @@
 import webbrowser
 
 
+__author__ = "Nick Snape"
+__credits__ = "Udacity"
+
+
 # Representation of a movie object.
 class Movie:
     """

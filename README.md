@@ -49,3 +49,7 @@ If instead you wish to edit the layout or markup directly, then this can be loca
 Once any changes have been made, simply run the program once more using Python to see the changes take effect.
 
 *Please note that instructions on the Python programming language or HTML/CSS is beyond the scope of this guide.*
+
+## Acknowledgements
+- This code is produce as part of the Udacity Full Stack Web Developer Nanodegree progream.
+- fresh_tomatoes.py provided by Adarsh Nair / Udacity.

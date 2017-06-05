@@ -2,6 +2,10 @@ import fresh_tomatoes
 import media
 
 
+__author__ = "Nick Snape"
+__credits__ = "Udacity"
+
+
 # Create the movie list ready for use by fresh_tomatoes.
 movies = [
     media.Movie(

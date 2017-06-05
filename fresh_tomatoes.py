@@ -3,6 +3,10 @@ import os
 import re
 
 
+__author__ = "Adarsh Nair and Nick Snape"
+__credits__ = "Udacity"
+
+
 # Styles and scripting for the page
 main_page_head = '''
 <!DOCTYPE html>
